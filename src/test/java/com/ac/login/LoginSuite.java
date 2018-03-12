@@ -5,11 +5,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class LoginSuite{
 
 	public WebDriver driver;
+	
+	@BeforeTest
 	public void launchWebsite()
 	{
 		System.setProperty("webdriver.gecko.driver","C:\\Users\\soumya.billava\\Downloads\\geckodriver\\geckodriver.exe");
@@ -32,7 +35,6 @@ public class LoginSuite{
 	@Test(priority=0)	
 	public void enterCorrectCredential()
 	{
-		launchWebsite();
 		login("Soumya", "qwerty");
 		String expected = "http://www.welcome";
 		Assert.assertEquals(driver.getCurrentUrl(), expected);
@@ -44,7 +46,6 @@ public class LoginSuite{
 	@Test(priority=1)
 	public void enterInvalidUsername()
 	{
-		launchWebsite();
 		login("qwerty", "qwerty");
 		String expected = "Logon failed for the user";
 		String popup = driver.findElement(By.id("failmessage")).getText();
@@ -57,7 +58,6 @@ public class LoginSuite{
 	@Test(priority=2)
 	public void enterNumber()
 	{
-		launchWebsite();
 		login("1234", "qwerty");
 		String expected = "Logon failed for the user";
 		String popup = driver.findElement(By.id("failmessage")).getText();
@@ -70,7 +70,6 @@ public class LoginSuite{
 	@Test(priority=3)
 	public void enterSpecialCharacters()
 	{
-		launchWebsite();
 		login("!@#$$", "qwerty");
 		String expected = "Logon failed for the user";
 		String popup = driver.findElement(By.id("failmessage")).getText();
@@ -84,7 +83,6 @@ public class LoginSuite{
 	@Test(priority=4)
 	public void enterNameAndSpecialCharacter()
 	{
-		launchWebsite();
 		login("Soumya", "!@#$%");
 		String expected = "Logon failed for the user";
 		String popup = driver.findElement(By.id("failmessage")).getText();
@@ -96,7 +94,6 @@ public class LoginSuite{
 	@Test(priority=5)
 	public void enterBlankUsername()
 	{
-		launchWebsite();
 		login(" ", "qwerty");
 		String expected = "Logon failed for the user";
 		String popup = driver.findElement(By.id("failmessage")).getText();
@@ -109,7 +106,6 @@ public class LoginSuite{
 	@Test(priority=6)
 	public void enterDate()
 	{
-		launchWebsite();
 		login("12-12-2017", "qwerty");
 		String expected = "Logon failed for the user";
 		String popup = driver.findElement(By.id("failmessage")).getText();
@@ -121,7 +117,6 @@ public class LoginSuite{
 	@Test(priority=7)
 	public void enterNoPassword()
 	{
-		launchWebsite();
 		driver.findElement(By.name("username")).sendKeys("Soumya");
 		driver.findElement(By.className("btn btn-lg btn-primary")).click();	
 		String expected = "Logon failed for the user";
@@ -135,7 +130,6 @@ public class LoginSuite{
 	@Test(priority=8)
 	public void ResetUsername()
 	{
-		launchWebsite();
 		driver.findElement(By.name("username")).sendKeys("Soumya");
 		driver.findElement(By.className("btn btn-lg btn-secondary")).click();
 		String emptyUsername = driver.findElement(By.name("username")).getText();
@@ -148,7 +142,6 @@ public class LoginSuite{
 	@Test(priority=9)
 	public void ResetPassword()
 	{
-		launchWebsite();
 		driver.findElement(By.name("password")).sendKeys("qwerty");
 		driver.findElement(By.className("btn btn-lg btn-secondary")).click();	
 		String emptyPasswd = driver.findElement(By.name("password")).getText();
@@ -161,7 +154,6 @@ public class LoginSuite{
 	@Test(priority=10)
 	public void ResetUsernamePassword()
 	{
-		launchWebsite();
 		driver.findElement(By.name("username")).sendKeys("Soumya");
 		driver.findElement(By.name("password")).sendKeys("qwerty");
 		driver.findElement(By.className("btn btn-lg btn-secondary")).click();	
