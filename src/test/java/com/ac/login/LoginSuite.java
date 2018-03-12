@@ -16,14 +16,14 @@ public class LoginSuite{
 		driver=new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get("http://www.dtolegv:8888");
+		driver.get("http://www.dtolegv8888");
 	}
 
 	public void login(String Username, String Password)
 	{
-		driver.findElement(By.id("a")).sendKeys("Username");
-		driver.findElement(By.id("b")).sendKeys("Password");
-		driver.findElement(By.id("c")).click();	
+		driver.findElement(By.name("username")).sendKeys(Username);
+		driver.findElement(By.name("password")).sendKeys(Password);
+		driver.findElement(By.className("btn btn-lg btn-primary")).click();
 	}
 	
 
@@ -34,7 +34,7 @@ public class LoginSuite{
 	{
 		launchWebsite();
 		login("Soumya", "qwerty");
-		String expected = "www.dtolegv:8888";
+		String expected = "http://www.welcome";
 		Assert.assertEquals(driver.getCurrentUrl(), expected);
 		driver.close();
 	}
@@ -47,7 +47,7 @@ public class LoginSuite{
 		launchWebsite();
 		login("qwerty", "qwerty");
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -60,7 +60,7 @@ public class LoginSuite{
 		launchWebsite();
 		login("1234", "qwerty");
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -73,7 +73,7 @@ public class LoginSuite{
 		launchWebsite();
 		login("!@#$$", "qwerty");
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -87,7 +87,7 @@ public class LoginSuite{
 		launchWebsite();
 		login("Soumya", "!@#$%");
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -99,7 +99,7 @@ public class LoginSuite{
 		launchWebsite();
 		login(" ", "qwerty");
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -112,7 +112,7 @@ public class LoginSuite{
 		launchWebsite();
 		login("12-12-2017", "qwerty");
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -122,10 +122,10 @@ public class LoginSuite{
 	public void enterNoPassword()
 	{
 		launchWebsite();
-		driver.findElement(By.id("a")).sendKeys("Username");
-		driver.findElement(By.id("c")).click();	
+		driver.findElement(By.name("username")).sendKeys("Soumya");
+		driver.findElement(By.className("btn btn-lg btn-primary")).click();	
 		String expected = "Logon failed for the user";
-		String popup = driver.findElement(By.id("d")).getText();
+		String popup = driver.findElement(By.id("failmessage")).getText();
 		Assert.assertEquals(popup, expected);
 		driver.close();
 	}
@@ -136,9 +136,9 @@ public class LoginSuite{
 	public void ResetUsername()
 	{
 		launchWebsite();
-		driver.findElement(By.id("a")).sendKeys("Username");
-		driver.findElement(By.id("e")).click();
-		String emptyUsername = driver.findElement(By.id("a")).getText();
+		driver.findElement(By.name("username")).sendKeys("Soumya");
+		driver.findElement(By.className("btn btn-lg btn-secondary")).click();
+		String emptyUsername = driver.findElement(By.name("username")).getText();
 		Assert.assertTrue(emptyUsername.equals(""));
 		driver.close();
 	}
@@ -149,9 +149,9 @@ public class LoginSuite{
 	public void ResetPassword()
 	{
 		launchWebsite();
-		driver.findElement(By.id("b")).sendKeys("Password");
-		driver.findElement(By.id("e")).click();	
-		String emptyPasswd = driver.findElement(By.id("b")).getText();
+		driver.findElement(By.name("password")).sendKeys("qwerty");
+		driver.findElement(By.className("btn btn-lg btn-secondary")).click();	
+		String emptyPasswd = driver.findElement(By.name("password")).getText();
 		Assert.assertTrue(emptyPasswd.equals(""));
 		driver.close();
 	}
@@ -162,12 +162,12 @@ public class LoginSuite{
 	public void ResetUsernamePassword()
 	{
 		launchWebsite();
-		driver.findElement(By.id("a")).sendKeys("Username");
-		driver.findElement(By.id("b")).sendKeys("Password");
-		driver.findElement(By.id("e")).click();	
-		String emptyUsername = driver.findElement(By.id("a")).getText();
+		driver.findElement(By.name("username")).sendKeys("Soumya");
+		driver.findElement(By.name("password")).sendKeys("qwerty");
+		driver.findElement(By.className("btn btn-lg btn-secondary")).click();	
+		String emptyUsername = driver.findElement(By.name("username")).getText();
 		Assert.assertTrue(emptyUsername.equals(""));
-		String emptyPasswd = driver.findElement(By.id("b")).getText();
+		String emptyPasswd = driver.findElement(By.name("password")).getText();
 		Assert.assertTrue(emptyPasswd.equals(""));
 		driver.quit();
 	}
